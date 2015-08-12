@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var connect = require('gulp-connect');
 var webpack = require('gulp-webpack');
+var livereload = require('gulp-livereload');
 
 var webpackConfig = require('./webpack.config');
 
@@ -16,10 +17,12 @@ gulp.task("webpack", function() {
     return gulp.src('./app.js')
         .pipe(webpack(webpackConfig))
         .pipe(gulp.dest('./dist'))
+        .pipe(livereload());
 });
 
 gulp.task('watch', function() {
-    gulp.watch(['js/**/*.js', 'sass/**/*.scss', 'images/**/*'], ['webpack']);
+    livereload.listen();
+    gulp.watch(['js/**/*', 'sass/**/*.scss', 'images/**/*'], ['webpack']);
 });
 
 gulp.task('default', [
