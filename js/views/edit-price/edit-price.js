@@ -2,10 +2,12 @@
 var React = require('react');
 
 
-var About = module.exports = React.createClass({
+var EditPrice = React.createClass({
     render: function (){
         return (
             <h2>About1</h2>
         );
     }
 });
+
+module.exports = EditPrice;

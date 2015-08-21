@@ -1,14 +1,19 @@
 'use strict';
-var React = require('react');
 
-var MainComponent = React.createClass({
-    render: function () {
-        return (
-            <div className="component-hello">
-                这是文字
-            </div>
-        )
+var ApiUrl = {
+    // 本地json
+    test: {
+        userInfo: '/js/data/userInfo.json'
+    },
+    dist: {
+        userInfo: 'https://api.github.com/users/nevergiveup-j/gists'
     }
-});
+}
 
-React.render(<MainComponent />, document.body);
+var url = ApiUrl.dist;
+
+if(document.cookie.indexOf('reactSetTest') !== -1) {
+    url = ApiUrl.test;
+}
+
+module.exports = url;
