@@ -1,3 +1,3 @@
 # react-demo
 
-node -v >= 5.7.0
+node版本 >= 5.7.0
