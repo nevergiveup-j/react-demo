@@ -80,7 +80,10 @@ module.exports = function makeWebpackConfig () {
     // 别名
     alias: {
       'COMMON': appPaths + '/common',
-      'COMPONENT': appPaths + '/component'
+      'COMPONENT': appPaths + '/component',
+      'ACTION': appPaths + '/redux/actions',
+      'REDUCER': appPaths + '/redux/reducers',
+      'STORE': appPaths + '/redux/stort'
     }
   }
 
