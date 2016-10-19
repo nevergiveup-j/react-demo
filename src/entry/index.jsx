@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
 import '../static/sass/common.scss'
-import Layout from 'COMMON/Layout';
+import Layout from 'COMMON/layout';
 
 // 首页
 import Index from '../component/index/index';

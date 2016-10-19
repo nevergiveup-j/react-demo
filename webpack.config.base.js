@@ -1,20 +1,18 @@
 'use strict';
 
-// Modules
-var webpack = require('webpack');
-var autoprefixer = require('autoprefixer');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+  // Modules
+  var webpack = require('webpack');
+  var autoprefixer = require('autoprefixer');
+  var HtmlWebpackPlugin = require('html-webpack-plugin');
+  var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
-/**
- * Env
- * Get npm lifecycle event to identify the environment
- */
-var ENV = process.env.npm_lifecycle_event;
-var isProd = ENV === 'build';
-var appPaths = __dirname + '/src';
+  /**
+   * Env
+   * Get npm lifecycle event to identify the environment
+   */
+  var ENV = process.env.npm_lifecycle_event;
+  var appPaths = __dirname + '/src';
 
 
   /**
@@ -46,9 +44,8 @@ var appPaths = __dirname + '/src';
     alias: {
       'COMMON': appPaths + '/common',
       'COMPONENT': appPaths + '/component',
-      'ACTION': appPaths + '/redux/actions',
-      'REDUCER': appPaths + '/redux/reducers',
-      'STORE': appPaths + '/redux/stort'
+      'ACTION': appPaths + '/actions',
+      'REDUCER': appPaths + '/reducers'
     }
   }
 
@@ -59,7 +56,7 @@ var appPaths = __dirname + '/src';
    * This handles most of the magic responsible for converting modules
    */
 
-   
+
   // Initialize module
   config.module = {
     preLoaders: [],
@@ -73,13 +70,22 @@ var appPaths = __dirname + '/src';
       exclude: /node_modules/
     }, {
       // ASSET LOADER
-      // Reference: https://github.com/webpack/file-loader
-      // Copy png, jpg, jpeg, gif, svg, woff, woff2, ttf, eot files to output
+      // Reference: https://github.com/webpack/url-loader
+      // Copy png, jpg, jpeg, gif files to output
       // Rename the file using the asset hash
       // Pass along the updated reference to your code
       // You can add here any file extension you want to get copied to your output
-      test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
-      loader: 'file'
+      test: /\.(png|jpg|jpeg|gif)$/,
+      loader: 'file?limit=10000&name=images/[name].[hash:8].[ext]'
+    }, {
+      // ASSET LOADER
+      // Reference: https://github.com/webpack/file-loader
+      // Copy svg, woff, woff2, ttf, eot files to output
+      // Rename the file using the asset hash
+      // Pass along the updated reference to your code
+      // You can add here any file extension you want to get copied to your output
+      test: /\.(svg|woff|woff2|ttf|eot)$/,
+      loader: 'file?&name=fonts/[name].[hash:8].[ext]'
     }, {
       // HTML LOADER
       // Reference: https://github.com/webpack/raw-loader
@@ -88,7 +94,7 @@ var appPaths = __dirname + '/src';
       loader: 'raw'
     }]
   };
-  
+
 
   // CSS LOADER
   // Reference: https://github.com/webpack/css-loader
@@ -103,10 +109,10 @@ var appPaths = __dirname + '/src';
     //
     // Reference: https://github.com/webpack/style-loader
     // Use style-loader in development for hot-loading
-    loader: ExtractTextPlugin.extract('style', 'css?module&localIdentName=[name]-[local]-[hash:base64:5]&-url?sourceMap!postcss')
+    loader: ExtractTextPlugin.extract('style', 'css?module&localIdentName=[name]-[local]-[hash:8]&-url?sourceMap!postcss')
   };
 
-  
+
   var sassLoader = {
     test: /\.s(a|c)ss$/,
     loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!sass?sourceMap')
@@ -115,7 +121,7 @@ var appPaths = __dirname + '/src';
   // Add cssLoader to the loader list
   config.module.loaders.push(cssLoader, sassLoader);
   config.sassLoader = {includePaths: appPaths + '/static'};
-  
+
 
   /**
    * PostCSS
@@ -144,20 +150,5 @@ var appPaths = __dirname + '/src';
       inject: 'body'
     })
   )
-
-  config.plugins.push(new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'))
-
-  /**
-   * Dev server configuration
-   * Reference: http://webpack.github.io/docs/configuration.html#devserver
-   * Reference: http://webpack.github.io/docs/webpack-dev-server.html
-   */
-  config.devServer = {
-    contentBase: appPaths,
-    host: '127.0.0.1',
-    port: 9091, //默认8080
-    stats: 'minimal'
-  };
-
 
 module.exports = config;
