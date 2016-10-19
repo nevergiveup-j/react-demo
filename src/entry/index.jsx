@@ -1,8 +1,8 @@
 import React from 'react';
-import {render} from 'react-dom';
-import {Router, Route, IndexRoute, hashHistory} from 'react-router';
+import { render } from 'react-dom';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
-import '../static/sass/common.scss'
+import '../static/sass/common.scss';
 import Layout from 'COMMON/layout';
 
 // 首页
@@ -10,7 +10,8 @@ import Index from '../component/index/index';
 // 列表
 import List from '../component/list/list';
 
-render((
+render(
+  (
     <Router history={hashHistory}>
       <Route path="/" component={Layout}>
         <IndexRoute component={Index}/>

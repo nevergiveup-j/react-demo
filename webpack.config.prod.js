@@ -14,11 +14,11 @@
    */
   config.output = {
     // Absolute output directory
-    path: __dirname + '/dist/lrw/static',
+    path: __dirname + '/dist/static',
 
     // Output path from the view of the page
     // Uses webpack-dev-server in development
-    publicPath: '/lrw/static/',
+    publicPath: '/static/',
 
     // Filename for entry points
     // Only adds hash in build mode
@@ -43,7 +43,7 @@
     // Reference: https://github.com/webpack/extract-text-webpack-plugin
     // Extract css files
     // Disabled when in test mode or not in build mode
-    new ExtractTextPlugin(('[name].[hash:8].css'))
+    new ExtractTextPlugin(('[name].[hash:8].css')),
 
     // Reference: http://webpack.github.io/docs/list-of-plugins.html#noerrorsplugin
     // Only emit files when there are no errors

@@ -1,10 +1,9 @@
 import 'isomorphic-fetch';
-import {notification} from 'antd';
 
-const API_BASE = (location.port == 80 || location.port == '') ? '' : 'http://dev.liangle.com';
+const API_BASE = '/';
 
-let dataService = {
-  getApiBase (){
+const dataService = {
+  getApiBase() {
     return API_BASE
   },
   /**
@@ -13,20 +12,23 @@ let dataService = {
    *       console.log(res);
    *   })
    */
-  get (url, params = {}) {
+  get(url, params = {}) {
     let query = [];
     let request = `${API_BASE}${url}`;
-    Object.keys(params).forEach(key =>{
-        query.push(`${key}=${params[key]}`)
-    });
+
+    Object
+      .keys(params)
+      .forEach(key => {
+          query.push(`${key}=${params[key]}`)
+      });
+
     query = query.join("&");
     request = query ? [request, query].join("?") : request;
     return fetch(request, {
-                credentials: 'include'
-            }).then(res => res.json())
-              .catch(err => {
-                notification.error({message: "网络错误" });
-              })
+            credentials: 'include'
+          })
+          .then(res => res.json())
+          .catch(err => {})
   },
   /**
    *   @example
@@ -45,7 +47,6 @@ let dataService = {
               body: JSON.stringify(params)
            }).then(res => res.json())
              .catch(err => {
-               notification.error({message: "网络错误" });
              })
   },
   /**
@@ -65,7 +66,6 @@ let dataService = {
               body: JSON.stringify(params)
            }).then(res => res.json())
              .catch(err => {
-               notification.error({message: "网络错误" });
              })
   },
 
@@ -86,7 +86,6 @@ let dataService = {
         body: JSON.stringify(params)
     }).then(res => res.json())
       .catch(err => {
-        notification.error({message: "网络错误" });
       })
   }
 };

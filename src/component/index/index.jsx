@@ -1,12 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
-import styles from './index.css';
+import styles from './index.scss';
 
 const Wrap = React.createClass({
   render() {
     return (
-      <div className={styles.react}>React</div>
+      <div>React</div>
     )  
   }
 })
