@@ -38,7 +38,7 @@
   ],
   "scripts": {
     "start": "npm run server",
-    "server": "webpack-dev-server --inline --progress --colors --config webpack.config.dev.js",
+    "server": "webpack-dev-server --inline --progress --colors",
     "lint": "eslint --ext .js,.jsx src",
     "build": "rimraf dist && webpack --bail --progress --profile --colors"
   }
