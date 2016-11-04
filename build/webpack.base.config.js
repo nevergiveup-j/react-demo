@@ -5,6 +5,7 @@
   var autoprefixer = require('autoprefixer');
   var HtmlWebpackPlugin = require('html-webpack-plugin');
   var ExtractTextPlugin = require('extract-text-webpack-plugin');
+  var path = require('path')
 
 
   /**
@@ -12,8 +13,9 @@
    * Get npm lifecycle event to identify the environment
    */
   var ENV = process.env.npm_lifecycle_event;
-  var appPaths = __dirname + '/src';
-
+  var rootPaths = path.resolve('.');
+  var appPaths = path.resolve('.', 'src');
+  var entryPaths = appPaths + '/pages/main'
 
   /**
    * Config
@@ -29,13 +31,18 @@
    * Karma will set this when it's a test build
    */
   config.entry = {
-    app: appPaths + '/entry/index.jsx',
-    vendors: [
-      'react',
-      'react-dom',
-      'react-router'
-    ]
+    app: entryPaths
+    // vendors: [
+    //   'react',
+    //   'react-dom',
+    //   'react-router'
+    // ]
   };
+  // config.entry = [
+  //   // 'webpack-dev-server/client?http://127.0.0.1:9091',
+  //   // 'webpack/hot/only-dev-server',
+  //   entryPaths
+  // ]
 
   config.resolve = {
     // 后缀名
@@ -144,9 +151,12 @@
   // Reference: https://github.com/ampedandwired/html-webpack-plugin
   // Render index.html
   config.plugins.push(
+
+    new webpack.optimize.OccurenceOrderPlugin(),
+
     new HtmlWebpackPlugin({
-      template: './index.html',
-      filename: '../index.html',
+      template: appPaths + '/views/index.html',
+      filename:  '../../index.html',
       inject: 'body'
     })
   )

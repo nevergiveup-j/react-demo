@@ -4,7 +4,7 @@
   var webpack = require('webpack');
   var ExtractTextPlugin = require('extract-text-webpack-plugin');
   var CopyWebpackPlugin = require('copy-webpack-plugin');
-  var config = require('./webpack.config.base.js'); 
+  var config = require('./webpack.base.config.js'); 
 
   /**
    * Output
@@ -81,7 +81,7 @@
     //     ignore: [
     //       { glob: 'sass/**/*', dot: true }
     //     ]
-    //   }   
+    //   }
     // )
   )
 

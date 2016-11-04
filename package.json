@@ -2,12 +2,15 @@
   "name": "raect",
   "version": "1.0.0",
   "private": true,
-  "entry": {
-    "index": "./src/entry/index.jsx"
+  "engines": {
+    "node": ">=4.4.5"
   },
+  "entry": {},
   "scripts": {
-    "start": "npm run server",
-    "server": "webpack-dev-server --inline --progress --colors --config webpack.config.dev.js",
+    "clean": "rimraf dist",
+    "start": "npm run serve",
+    "server": "node ./server/server.js",
+    "serve": "webpack-dev-server --hot --inline --progress --colors --config ./build/webpack.dev.config.js",
     "lint": "eslint --ext .js,.jsx src",
     "build": "rimraf dist && webpack --bail --progress --profile --colors --config webpack.config.prod.js"
   },
@@ -33,12 +36,15 @@
     "babel-preset-stage-0": "^6.5.0",
     "copy-webpack-plugin": "^3.0.1",
     "css-loader": "^0.25.0",
+    "debug": "^2.2.0",
+    "ejs": "^2.5.2",
     "eslint": "^3.6.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
+    "express": "^4.14.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.22.0",

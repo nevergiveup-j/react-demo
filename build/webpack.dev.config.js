@@ -1,9 +1,14 @@
 'use strict';
 
   // Modules
+  var path = require('path');
   var webpack = require('webpack');
   var ExtractTextPlugin = require('extract-text-webpack-plugin');
-  var config = require('./webpack.config.base.js');
+  var config = require('./webpack.base.config.js');
+
+  var rootPaths = path.resolve('.');
+  var appPaths = path.resolve('.', 'src');
+
 
   /**
    * Dev server configuration
@@ -11,7 +16,7 @@
    * Reference: http://webpack.github.io/docs/webpack-dev-server.html
    */
   config.devServer = {
-    contentBase: __dirname + '/src',
+    contentBase: rootPaths,
     host: '127.0.0.1',
     port: 9091, //默认8080
     stats: 'minimal'
@@ -25,7 +30,7 @@
    */
   config.output = {
     // Absolute output directory
-    path: __dirname + '/dist/lrw/static',
+    path: rootPaths + '/dist/static',
 
     // Output path from the view of the page
     // Uses webpack-dev-server in development
@@ -57,5 +62,8 @@
     // Disabled when in test mode or not in build mode
     new ExtractTextPlugin(('[name].bundle.css'))
   )
+
+
+  console.log(config);
 
 module.exports = config;
