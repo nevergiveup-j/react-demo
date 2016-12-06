@@ -1,20 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const App = React.createClass({
-  getInitialState() {
-    return {
-      presses: 0,
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
     };
-  },
+  }
+  componentWillMount() {
+  }
   render() {
     return (
       <div>
-        <div>header</div>
+        <div>header6</div>
         {this.props.children}
       </div>
     );
   }
-});
+}
 
 export default App;
-

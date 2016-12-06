@@ -31,12 +31,16 @@
    * Karma will set this when it's a test build
    */
   config.entry = {
-    app: entryPaths
-    // vendors: [
-    //   'react',
-    //   'react-dom',
-    //   'react-router'
-    // ]
+    app: [
+      entryPaths,
+      'webpack-hot-middleware/client'
+    ],
+    vendors: [
+      'react',
+      'react-dom',
+      'react-router',
+      'webpack-hot-middleware/client'
+    ]
   };
   // config.entry = [
   //   // 'webpack-dev-server/client?http://127.0.0.1:9091',
@@ -135,11 +139,11 @@
    * Reference: https://github.com/postcss/autoprefixer-core
    * Add vendor prefixes to your css
    */
-  config.postcss = [
-    autoprefixer({
-      browsers: ['last 2 version']
-    })
-  ];
+  // config.postcss = [
+  //   autoprefixer({
+  //     browsers: ['last 2 version']
+  //   })
+  // ];
 
   /**
    * Plugins
@@ -154,9 +158,11 @@
 
     new webpack.optimize.OccurenceOrderPlugin(),
 
+    new HtmlWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: appPaths + '/views/index.html',
-      filename:  '../../index.html',
+      filename: rootPaths + '/index.html',
+      chunks: ['vendors', 'app'],
       inject: 'body'
     })
   )

@@ -9,18 +9,17 @@
   var rootPaths = path.resolve('.');
   var appPaths = path.resolve('.', 'src');
 
-
   /**
    * Dev server configuration
    * Reference: http://webpack.github.io/docs/configuration.html#devserver
    * Reference: http://webpack.github.io/docs/webpack-dev-server.html
    */
-  config.devServer = {
-    contentBase: rootPaths,
-    host: '127.0.0.1',
-    port: 9091, //默认8080
-    stats: 'minimal'
-  };
+  // config.devServer = {
+  //   contentBase: appPaths,
+  //   host: '127.0.0.1',
+  //   port: 9091, //默认8080
+  //   stats: 'minimal'
+  // };
 
   /**
    * Output
@@ -45,6 +44,7 @@
     chunkFilename: '[name].bundle.js'
   };
 
+  // config.target = 'node';
 
   /**
    * Devtool
@@ -54,16 +54,18 @@
 
   config.devtool = 'eval-source-map';
 
-
-
   config.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+
     // Reference: https://github.com/webpack/extract-text-webpack-plugin
     // Extract css files
     // Disabled when in test mode or not in build mode
-    new ExtractTextPlugin(('[name].bundle.css'))
+    new ExtractTextPlugin(('[name].bundle.css')),
+
+    new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
   )
 
 
-  console.log(config);
+  // console.log(config);
 
 module.exports = config;

@@ -8,8 +8,8 @@
   "entry": {},
   "scripts": {
     "clean": "rimraf dist",
-    "start": "npm run serve",
-    "server": "node ./server/server.js",
+    "start": "npm run server",
+    "server": "export NODE_ENV=development && node ./server/server.js",
     "serve": "webpack-dev-server --hot --inline --progress --colors --config ./build/webpack.dev.config.js",
     "lint": "eslint --ext .js,.jsx src",
     "build": "rimraf dist && webpack --bail --progress --profile --colors --config webpack.config.prod.js"
