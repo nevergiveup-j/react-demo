@@ -5,7 +5,6 @@ const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// var browserSync = require('browser-sync');
 
 const webpackConfig = require('../build/webpack.dev.config')
 const config = require('../config')
@@ -25,25 +24,20 @@ app.use(webpackDevMiddleware(compiler, {
   lazy: false,
   noInfo: true,
   quiet: false,
+  hot: true,
   stats: {
     chunks: false,
     chunkModules: false,
     colors: true,
   }
 }))
-app.use(webpackHotMiddleware(compiler));
 
-// for(let i in webpackConfig.plugins) {
-//   let obj = webpackConfig.plugins[i];
-//
-//   if(obj instanceof HtmlWebpackPlugin) {
-//
-//   }
-// }
+app.use(webpackHotMiddleware(compiler));
 
 app.get('*', function (req, res) {
     // res.render('index');
   res.sendFile(config.path_src + '/views/index.html');
+  // console.log('get===' + config.path_base);
   // res.sendFile(config.path_base + '/index.html');
 });
 
@@ -57,7 +51,3 @@ app.listen(PORT, '127.0.0.1', (err) => {
 
   log(`Listening at http://127.0.0.1:${PORT}`);
 })
-
-// // 设置views路径和模板
-// app.set('views', config.path_src + '/views')
-// app.set('view engine', 'ejs')

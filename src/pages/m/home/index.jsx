@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-class App extends Component {
+import styles from './index.scss';
+
+class Index extends Component {
   constructor(props) {
     super(props);
 
@@ -12,11 +14,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div>header7</div>
-        {this.props.children}
+        <div>Home</div>
       </div>
     );
   }
 }
 
-export default App;
+export default Index;

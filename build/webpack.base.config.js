@@ -15,7 +15,7 @@
   var ENV = process.env.npm_lifecycle_event;
   var rootPaths = path.resolve('.');
   var appPaths = path.resolve('.', 'src');
-  var entryPaths = appPaths + '/pages/main'
+  var entryPaths = appPaths + '/app';
 
   /**
    * Config
@@ -32,14 +32,14 @@
    */
   config.entry = {
     app: [
-      entryPaths,
-      'webpack-hot-middleware/client'
+      'webpack-hot-middleware/client',
+      entryPaths
     ],
     vendors: [
+      'webpack-hot-middleware/client',
       'react',
       'react-dom',
       'react-router',
-      'webpack-hot-middleware/client'
     ]
   };
   // config.entry = [
@@ -55,6 +55,8 @@
     alias: {
       'COMMON': appPaths + '/common',
       'COMPONENT': appPaths + '/component',
+      'PAGES': appPaths + '/pages',
+      'LAYOUTS': appPaths + '/layouts',
       'ACTION': appPaths + '/actions',
       'REDUCER': appPaths + '/reducers'
     }
@@ -156,15 +158,15 @@
   // Render index.html
   config.plugins.push(
 
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin()
 
-    new HtmlWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: appPaths + '/views/index.html',
-      filename: rootPaths + '/index.html',
-      chunks: ['vendors', 'app'],
-      inject: 'body'
-    })
+    // new HtmlWebpackPlugin(),
+    // new HtmlWebpackPlugin({
+    //   filename: '../index.html',
+    //   template: appPaths + '/views/index.html',
+    //   chunks: ['vendors', 'app'],
+    //   inject: 'body'
+    // })
   )
 
 module.exports = config;
