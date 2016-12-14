@@ -32,11 +32,11 @@
    */
   config.entry = {
     app: [
-      'webpack-hot-middleware/client',
+      'webpack-hot-middleware/client?quiet=true&reload=true',
       entryPaths
     ],
     vendors: [
-      'webpack-hot-middleware/client',
+      'webpack-hot-middleware/client?quiet=true&reload=true',
       'react',
       'react-dom',
       'react-router',
@@ -157,16 +157,14 @@
   // Reference: https://github.com/ampedandwired/html-webpack-plugin
   // Render index.html
   config.plugins.push(
+    new webpack.optimize.OccurenceOrderPlugin(),
 
-    new webpack.optimize.OccurenceOrderPlugin()
-
-    // new HtmlWebpackPlugin(),
-    // new HtmlWebpackPlugin({
-    //   filename: '../index.html',
-    //   template: appPaths + '/views/index.html',
-    //   chunks: ['vendors', 'app'],
-    //   inject: 'body'
-    // })
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: appPaths + '/views/index.html',
+      chunks: ['vendors', 'app'],
+      inject: 'body'
+    })
   )
 
 module.exports = config;

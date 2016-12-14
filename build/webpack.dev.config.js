@@ -4,22 +4,11 @@
   var path = require('path');
   var webpack = require('webpack');
   var ExtractTextPlugin = require('extract-text-webpack-plugin');
+  var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
   var config = require('./webpack.base.config.js');
 
   var rootPaths = path.resolve('.');
   var appPaths = path.resolve('.', 'src');
-
-  /**
-   * Dev server configuration
-   * Reference: http://webpack.github.io/docs/configuration.html#devserver
-   * Reference: http://webpack.github.io/docs/webpack-dev-server.html
-   */
-  // config.devServer = {
-  //   contentBase: appPaths,
-  //   host: '127.0.0.1',
-  //   port: 9091, //默认8080
-  //   stats: 'minimal'
-  // };
 
   /**
    * Output
@@ -62,10 +51,27 @@
     // Disabled when in test mode or not in build mode
     new ExtractTextPlugin(('[name].bundle.css')),
 
+    // Reference: https://github.com/Va1/browser-sync-webpack-plugin
+    new BrowserSyncPlugin(
+      {
+        host: '127.0.0.1',
+        port: 9090,
+        proxy: 'http://127.0.0.1:9091/',
+        logConnections: false,
+        notify: false
+      },
+      // plugin options
+      {
+        // determines if browserSync should take care
+        // of reload (defaults to true). switching it off
+        // might be useful if you combine this plugin
+        // with webpack-dev-server to reach
+        // Hot Loader/Hot Module Replacement tricks
+        reload: true
+      }
+    ),
+
     new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
   )
-
-
-  // console.log(config);
 
 module.exports = config;

@@ -12,6 +12,8 @@ class Index extends Component {
   componentWillMount() {
   }
   render() {
+    console.log('page==== home');
+
     return (
       <div>
         <div>Home</div>

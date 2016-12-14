@@ -12,7 +12,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div>header7</div>
+        <div>header6</div>
         {this.props.children}
       </div>
     );

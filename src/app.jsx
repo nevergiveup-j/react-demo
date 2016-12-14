@@ -6,8 +6,6 @@ import rootRoute from './pages/router'
 // import Layout from './layouts/layout'
 // import List from './component/list/list'
 
-// console.log(Layout);
-
 render(
   (
     <Router
