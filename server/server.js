@@ -4,11 +4,12 @@ const debug = require('debug')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const history = require('connect-history-api-fallback');
 
 const webpackConfig = require('../build/webpack.dev.config')
 const config = require('../config')
+
+console.log(webpackConfig);
 
 debug.enable('app:*');
 
@@ -17,8 +18,6 @@ const compiler = webpack(webpackConfig)
 const log = debug('app:server');
 
 const PORT = config.server_port;
-
-log(config);
 
 app.use('/static', express.static(config.path_src + '/static'));
 app.use(history());
@@ -37,16 +36,6 @@ app.use(webpackDevMiddleware(compiler, {
 }))
 
 app.use(webpackHotMiddleware(compiler));
-
-
-// app.get('*', function (req, res) {
-    // res.render('index');
-  // res.sendFile(config.path_src + '/views/index.html');
-  // console.log('get===' + config.path_base);
-  // res.sendFile(config.path_base + '/index.html');
-// });
-
-
 
 app.listen(PORT, '127.0.0.1', (err) => {
   if (err) {

@@ -6,9 +6,22 @@
   var ExtractTextPlugin = require('extract-text-webpack-plugin');
   var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
   var config = require('./webpack.base.config.js');
+  var PAGES = require('../config/pages');
 
   var rootPaths = path.resolve('.');
-  var appPaths = path.resolve('.', 'src');
+
+    // add hot-reload related code to entry chunk
+    config.entry = PAGES.reduce(
+      function (memo, page) {
+        memo[page] = [
+          'eventsource-polyfill', //兼容ie
+          'webpack-hot-middleware/client',
+          config.entry[page]
+        ]
+        return memo;
+      },
+      {}
+    );
 
   /**
    * Output
@@ -69,9 +82,7 @@
         // Hot Loader/Hot Module Replacement tricks
         reload: true
       }
-    ),
-
-    new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
+    )
   )
 
 module.exports = config;

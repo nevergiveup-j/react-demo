@@ -5,8 +5,9 @@
   var autoprefixer = require('autoprefixer');
   var HtmlWebpackPlugin = require('html-webpack-plugin');
   var ExtractTextPlugin = require('extract-text-webpack-plugin');
-  var path = require('path')
+  var PAGES = require('../config/pages');
 
+  var path = require('path')
 
   /**
    * Env
@@ -14,8 +15,7 @@
    */
   var ENV = process.env.npm_lifecycle_event;
   var rootPaths = path.resolve('.');
-  var appPaths = path.resolve('.', 'src');
-  var entryPaths = appPaths + '/app';
+  var srcPaths = path.resolve('.', 'src');
 
   /**
    * Config
@@ -30,35 +30,25 @@
    * Should be an empty object if it's generating a test build
    * Karma will set this when it's a test build
    */
-  config.entry = {
-    app: [
-      'webpack-hot-middleware/client?quiet=true&reload=true',
-      entryPaths
-    ],
-    vendors: [
-      'webpack-hot-middleware/client?quiet=true&reload=true',
-      'react',
-      'react-dom',
-      'react-router',
-    ]
-  };
-  // config.entry = [
-  //   // 'webpack-dev-server/client?http://127.0.0.1:9091',
-  //   // 'webpack/hot/only-dev-server',
-  //   entryPaths
-  // ]
+  config.entry = PAGES.reduce(
+    function(memo, page) {
+      memo[page] = srcPaths + '/pages/' + page;
+      return memo;
+    },
+    {}
+  )
 
   config.resolve = {
     // 后缀名
     extensions: ['', '.js', '.jsx'],
     // 别名
     alias: {
-      'COMMON': appPaths + '/common',
-      'COMPONENT': appPaths + '/component',
-      'PAGES': appPaths + '/pages',
-      'LAYOUTS': appPaths + '/layouts',
-      'ACTION': appPaths + '/actions',
-      'REDUCER': appPaths + '/reducers'
+      'COMMON': srcPaths + '/common',
+      'COMPONENT': srcPaths + '/component',
+      'PAGES': srcPaths + '/pages',
+      'LAYOUTS': srcPaths + '/layouts',
+      'ACTION': srcPaths + '/actions',
+      'REDUCER': srcPaths + '/reducers'
     }
   }
 
@@ -133,7 +123,7 @@
 
   // Add cssLoader to the loader list
   config.module.loaders.push(cssLoader, sassLoader);
-  config.sassLoader = {includePaths: appPaths + '/static'};
+  config.sassLoader = {includePaths: srcPaths + '/static'};
 
 
   /**
@@ -152,19 +142,19 @@
    * Reference: http://webpack.github.io/docs/configuration.html#plugins
    * List: http://webpack.github.io/docs/list-of-plugins.html
    */
-  config.plugins = [];
+  config.plugins = [
+    new webpack.optimize.OccurenceOrderPlugin()
+  ];
 
-  // Reference: https://github.com/ampedandwired/html-webpack-plugin
-  // Render index.html
-  config.plugins.push(
-    new webpack.optimize.OccurenceOrderPlugin(),
-
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: appPaths + '/views/index.html',
-      chunks: ['vendors', 'app'],
-      inject: 'body'
-    })
-  )
+  PAGES.forEach(function(name) {
+    config.plugins.push(
+      new HtmlWebpackPlugin({
+        filename: name + '.html',
+        template: srcPaths + '/views/'+ name +'.html',
+        chunks: ['vendors', name],
+        inject: 'body'
+      })
+    )
+  })
 
 module.exports = config;

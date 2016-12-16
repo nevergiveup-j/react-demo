@@ -4,7 +4,7 @@
   var webpack = require('webpack');
   var ExtractTextPlugin = require('extract-text-webpack-plugin');
   var CopyWebpackPlugin = require('copy-webpack-plugin');
-  var config = require('./webpack.base.config.js'); 
+  var config = require('./webpack.base.config.js');
 
   /**
    * Output
@@ -67,9 +67,7 @@
       "process.env": {
          NODE_ENV: JSON.stringify("production")
        }
-    }),
-
-    new webpack.optimize.CommonsChunkPlugin('vendors', '[name].[hash:8].js')
+    })
 
     // Copy assets from the public folder
     // Reference: https://github.com/kevlened/copy-webpack-plugin
